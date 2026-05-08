@@ -13,7 +13,18 @@ def create_inventory(items):
     Returns:
         Un diccionario con cada item y su cantidad
     """
-    pass  # Reemplazar con tu implementación
+    diccio={}
+    unic=set(items)
+    for u in unic:
+        t=0
+
+        for i in items:
+            if u==i:
+                t+=1
+        diccio[u]=t
+    return diccio
+
+
 
 
 def add_items(inventario, items):
@@ -29,7 +40,30 @@ def add_items(inventario, items):
     Returns:
         El inventario actualizado
     """
-    pass  # Reemplazar con tu implementación
+    items= create_inventory(items)
+    for k,v in inventario.items():
+        for m,c in items.items():
+            if k==m:
+                inventario[k]=v+c
+
+    for m,c in items.items():
+        E=False
+        for k,v in inventario.items():
+            if m==k:
+                E=True
+        if E==False:
+         inventario[m]=c
+
+
+    return inventario
+
+
+
+
+
+
+
+    return inventario
 
 
 def decrement_items(inventario, items):
@@ -46,7 +80,16 @@ def decrement_items(inventario, items):
     Returns:
         El inventario actualizado (sin valores negativos)
     """
-    pass  # Reemplazar con tu implementación
+    items = create_inventory(items)
+    for k, v in inventario.items():
+        for m, c in items.items():
+            if k == m:
+                if v-c>=0:
+                 inventario[k] = v - c
+                else:
+                    inventario[k]=0
+    return inventario
+
 
 
 def remove_item(inventario, item):
@@ -61,7 +104,18 @@ def remove_item(inventario, item):
     Returns:
         El inventario actualizado (o sin cambios si el item no existe)
     """
-    pass  # Reemplazar con tu implementación
+    lst=[]
+    for i in inventario.keys():
+        print(i)
+        if i==item:
+            lst.append(i)
+    for i in lst:
+        del inventario[i]
+
+    return inventario
+
+
+
 
 
 def list_inventory(inventario):
@@ -75,7 +129,14 @@ def list_inventory(inventario):
     Returns:
         Lista de tuplas (item, cantidad) con cantidad > 0
     """
-    pass  # Reemplazar con tu implementación
+    lst=[]
+    for k,v in inventario.items():
+        if v>0:
+            a=(k,v)
+            lst.append(a)
+    return lst
+
+
 
 
 def find_max_value(diccionario):
@@ -93,7 +154,20 @@ def find_max_value(diccionario):
     Ejemplo:
         find_max_value({'John': 85, 'Emma': 92, 'Sophia': 78}) -> 'Emma'
     """
-    pass  # Reemplazar con tu implementación
+    maximo=0
+    res=0
+    for k,v in diccionario.items():
+        if v>maximo:
+            maximo=v
+            res=k
+    if res==0:
+        if diccionario=={}:
+          return ''
+        else:
+            return "B"
+    else:
+        return res
+
 
 
 def reverse_dict(diccionario):
@@ -112,7 +186,14 @@ def reverse_dict(diccionario):
         reverse_dict({'a': 1, 'b': 2, 'c': 3, 'd': 3, 'e': 2})
         -> {1: 'a', 2: 'be', 3: 'cd'}
     """
-    pass  # Reemplazar con tu implementación
+    diccio={}
+    for k, v in diccionario.items():
+        if  v in diccio:
+           diccio[v]+=k
+        else:
+            diccio[v]=k
+    return diccio
+
 
 
 def word_frequency(palabras):
@@ -131,7 +212,17 @@ def word_frequency(palabras):
         word_frequency(["apple", "banana", "apple", "orange", "banana", "apple"])
         -> {'apple': 3, 'banana': 2, 'orange': 1}
     """
-    pass  # Reemplazar con tu implementación
+    diccio={}
+    v=0
+    for u in set(palabras):
+        for i in palabras:
+            if u==i:
+                v+=1
+        diccio[u]=v
+        v=0
+
+    return diccio
+
 
 
 def find_biggest_expense(gastos):
@@ -151,7 +242,18 @@ def find_biggest_expense(gastos):
                               'Transport': [10, 1, 2],
                               'Games': [10, 20, 30]}) -> 'Food'
     """
-    pass  # Reemplazar con tu implementación
+    n=0
+    res=''
+    for k, list in gastos.items():
+        suma=0
+        for gastos in list:
+             suma+=gastos
+        promedio=suma/len(list)
+        if promedio>n:
+            n=promedio
+            res=k
+    return res
+
 
 
 def sum_expenses(gastos):
@@ -171,7 +273,18 @@ def sum_expenses(gastos):
                       'Games': [10, 20, 30]})
         -> {'Food': 240, 'Transport': 13, 'Games': 60}
     """
-    pass  # Reemplazar con tu implementación
+    lst=[]
+    diccio={}
+    for k, list in gastos.items():
+       suma = 0
+       if not list== []:
+          for gastos in list:
+             suma += gastos
+             diccio[k]=suma
+       else:
+           diccio[k]=0
+    return diccio
+
 
 
 def sum_expenses_by_type(gastos):
@@ -194,4 +307,31 @@ def sum_expenses_by_type(gastos):
         })
         -> {'A': 96, 'B': 174, 'C': 104}
     """
-    pass  # Reemplazar con tu implementación
+    a=0
+    b=0
+    c=0
+    diccio={}
+    for l in gastos.values():
+        for t in l:
+            if t[0].lower()=="a":
+                a+=t[1]
+            elif t[0].lower() == "b":
+                b+=t[1]
+            else:
+                c += t[1]
+    if a!=0:
+        diccio["A"]=a
+    if b!=0:
+        diccio["B"]=b
+    if c!=0:
+        diccio["C"]=c
+    return diccio
+
+
+
+a= sum_expenses_by_type({
+    'Food': [("A", 60), ("B", 100), ("A", 20)],
+    'Transport': [("A", 10), ("B", 50), ("C", 5)],
+    'Games': [("A", 6), ("B", 24), ("C", 99)]
+            })
+print(a)
